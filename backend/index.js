@@ -1,12 +1,5 @@
 const dotenv = require('dotenv');
 
-// Load environment variables from .env
-const dotenvResult = dotenv.config();
-if (dotenvResult.error) {
-  console.error('Error loading .env file:', dotenvResult.error);
-  process.exit(1);
-}
-// Proceed with other imports
 const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
