@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.background-color{
+    background-color: rgba(59, 131, 246, 0.7);
+}
+@layer utilities {
+    .hide-scrollbar {
+      /* For Firefox */
+      scrollbar-width: none;
+      /* For Chrome, Safari, and Edge */
+      -ms-overflow-style: none; /* Internet Explorer and Edge */
+    }
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, and Edge */
+    }
+   .top-shadow{
+    box-shadow: 0 -10px 20px 13px #ffffff;
+   }
+  }
