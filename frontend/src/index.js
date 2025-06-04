@@ -8,7 +8,7 @@ import reportWebVitals from './reportWebVitals';
 
 
 // Extract and log the Google Client ID
-const clientId =process.env.VITE_GOOGLE_CLIENT_ID;
+const clientId =process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

@@ -2,7 +2,7 @@ import React from 'react';
 
 const GoogleLoginButton = () => {
   const handleGoogleLogin = () => {
-  const backendUrl = process.env.VITE_BACKEND_URL || 'http://localhost:8080';
+  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
   window.location.href = `${backendUrl}/api/google`;};
 
   return (
