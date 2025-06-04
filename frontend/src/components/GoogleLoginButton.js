@@ -2,8 +2,8 @@ import React from 'react';
 
 const GoogleLoginButton = () => {
   const handleGoogleLogin = () => {
-    window.location.href = 'http://localhost:8080/api/google'; // Initiates Google OAuth
-  };
+  const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8080';
+  window.location.href = `${backendUrl}/api/google`;};
 
   return (
     <button
