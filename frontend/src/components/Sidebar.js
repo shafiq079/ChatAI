@@ -3,11 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import SummaryApi from '../common';
 import { RiSearchLine } from "react-icons/ri";
 import { TbMessageDots } from "react-icons/tb";
+import { HiMenu, HiX } from 'react-icons/hi';
 
 const Sidebar = ({ setConversationId, onConversationCreated, updateConversationTitle, refreshKey }) => {
   const [conversations, setConversations] = useState({ 'Today': [], 'A week ago': [], 'A month ago': [] });
   const [error, setError] = useState(null);
   const [newConversationId, setNewConversationId] = useState(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
 
@@ -95,11 +97,36 @@ const Sidebar = ({ setConversationId, onConversationCreated, updateConversationT
     }
   };
 
-  return (
-    <div className="hidden md:flex md:w-1/4 lg:w-1/5 h-full bg-white shadow-lg p-4 flex-col">
-      <div className="mb-4">
+  // Hamburger for mobile
+  const Hamburger = (
+    <button
+      className="md:hidden fixed top-4 left-4 z-50 bg-white rounded-full p-2 shadow-lg border border-gray-200"
+      aria-label="Open sidebar"
+      onClick={() => setMobileOpen(true)}
+    >
+      <HiMenu size={24} />
+    </button>
+  );
+
+  // Mobile sidebar overlay
+  const MobileSidebar = (
+    <div className={`fixed inset-0 z-50 bg-black bg-opacity-40 flex md:hidden ${mobileOpen ? '' : 'pointer-events-none'}`}
+      style={{ transition: 'background 0.2s' }}
+      onClick={() => setMobileOpen(false)}
+    >
+      <aside
+        className={`bg-white w-4/5 max-w-xs h-full shadow-lg p-4 flex flex-col transform transition-transform duration-200 ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}`}
+        onClick={e => e.stopPropagation()}
+      >
+        <button
+          className="self-end mb-4"
+          aria-label="Close sidebar"
+          onClick={() => setMobileOpen(false)}
+        >
+          <HiX size={28} />
+        </button>
         <h1 className="text-xl font-bold mb-4">CHAT A.I.+</h1>
-        <div className="flex justify-between items-center gap-2">
+        <div className="flex justify-between items-center gap-2 mb-4">
           <button
             onClick={handleNewChat}
             className="bg-blue-600 text-white w-3/4 py-2 px-8 rounded-full flex items-center"
@@ -110,44 +137,103 @@ const Sidebar = ({ setConversationId, onConversationCreated, updateConversationT
             <RiSearchLine />
           </button>
         </div>
-      </div>
-      <div className="flex justify-between items-center mb-2 border-t border-b border-gray-200 py-2">
-        <h2 className="text-sm font-semibold text-gray-500">Conversations</h2>
-        <button className="text-blue-600 text-sm">Clear All</button>
-      </div>
-      <div className="flex-1 overflow-y-auto hide-scrollbar">
-        {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
-        {Object.entries(conversations).map(([timeCategory, chats]) => (
-          <div key={timeCategory}>
-            <h3 className="text-xs font-semibold text-gray-400 mt-4 mb-2">{timeCategory}</h3>
-            {chats.length === 0 ? (
-              <div className="text-sm text-gray-500">No conversations</div>
-            ) : (
-              chats.map((conv) => (
-                <div
-                  key={conv.id}
-                  onClick={() => handleConversationClick(conv.id)}
-                  className="flex items-center py-3 border-gray-200 hover:cursor-pointer"
-                >
-                  <span className="mr-2 text-gray-500"><TbMessageDots /></span>
-                  <span className="text-sm truncate">{conv.title}</span>
-                </div>
-              ))
-            )}
-          </div>
-        ))}
-      </div>
-      <div className="top-shadow mt-2 flex items-center p-2 rounded-full border border-gray-100">
-        <button className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center mr-2">
-          <span className="text-sm">⚙️</span>
-        </button>
-        <span className="text-sm">Settings</span>
-      </div>
-      <div className="mt-2 flex items-center px-2 py-2 rounded-full border border-gray-100">
-        <img src="https://via.placeholder.com/32" alt="Profile" className="w-6 h-6 rounded-full mr-2" />
-        <span className="text-sm">Andrew Neilson</span>
-      </div>
+        <div className="flex justify-between items-center mb-2 border-t border-b border-gray-200 py-2">
+          <h2 className="text-sm font-semibold text-gray-500">Conversations</h2>
+          <button className="text-blue-600 text-sm">Clear All</button>
+        </div>
+        <div className="flex-1 overflow-y-auto hide-scrollbar">
+          {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
+          {Object.entries(conversations).map(([timeCategory, chats]) => (
+            <div key={timeCategory}>
+              <h3 className="text-xs font-semibold text-gray-400 mt-4 mb-2">{timeCategory}</h3>
+              {chats.length === 0 ? (
+                <div className="text-sm text-gray-500">No conversations</div>
+              ) : (
+                chats.map((conv) => (
+                  <div
+                    key={conv.id}
+                    onClick={() => { handleConversationClick(conv.id); setMobileOpen(false); }}
+                    className="flex items-center py-3 border-gray-200 hover:cursor-pointer"
+                  >
+                    <span className="mr-2 text-gray-500"><TbMessageDots /></span>
+                    <span className="text-sm truncate">{conv.title}</span>
+                  </div>
+                ))
+              )}
+            </div>
+          ))}
+        </div>
+        <div className="top-shadow mt-2 flex items-center p-2 rounded-full border border-gray-100">
+          <button className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center mr-2">
+            <span className="text-sm">⚙️</span>
+          </button>
+          <span className="text-sm">Settings</span>
+        </div>
+        <div className="mt-2 flex items-center px-2 py-2 rounded-full border border-gray-100">
+          <img src="https://via.placeholder.com/32" alt="Profile" className="w-6 h-6 rounded-full mr-2" />
+          <span className="text-sm">Andrew Neilson</span>
+        </div>
+      </aside>
     </div>
+  );
+
+  return (
+    <>
+      {Hamburger}
+      {MobileSidebar}
+      <div className="hidden md:flex md:w-1/4 lg:w-1/5 h-full bg-white shadow-lg p-4 flex-col">
+        <div className="mb-4">
+          <h1 className="text-xl font-bold mb-4">CHAT A.I.+</h1>
+          <div className="flex justify-between items-center gap-2">
+            <button
+              onClick={handleNewChat}
+              className="bg-blue-600 text-white w-3/4 py-2 px-8 rounded-full flex items-center"
+            >
+              + New Chat
+            </button>
+            <button className="text-white bg-black p-2 rounded-full flex items-center justify-center">
+              <RiSearchLine />
+            </button>
+          </div>
+        </div>
+        <div className="flex justify-between items-center mb-2 border-t border-b border-gray-200 py-2">
+          <h2 className="text-sm font-semibold text-gray-500">Conversations</h2>
+          <button className="text-blue-600 text-sm">Clear All</button>
+        </div>
+        <div className="flex-1 overflow-y-auto hide-scrollbar">
+          {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
+          {Object.entries(conversations).map(([timeCategory, chats]) => (
+            <div key={timeCategory}>
+              <h3 className="text-xs font-semibold text-gray-400 mt-4 mb-2">{timeCategory}</h3>
+              {chats.length === 0 ? (
+                <div className="text-sm text-gray-500">No conversations</div>
+              ) : (
+                chats.map((conv) => (
+                  <div
+                    key={conv.id}
+                    onClick={() => handleConversationClick(conv.id)}
+                    className="flex items-center py-3 border-gray-200 hover:cursor-pointer"
+                  >
+                    <span className="mr-2 text-gray-500"><TbMessageDots /></span>
+                    <span className="text-sm truncate">{conv.title}</span>
+                  </div>
+                ))
+              )}
+            </div>
+          ))}
+        </div>
+        <div className="top-shadow mt-2 flex items-center p-2 rounded-full border border-gray-100">
+          <button className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center mr-2">
+            <span className="text-sm">⚙️</span>
+          </button>
+          <span className="text-sm">Settings</span>
+        </div>
+        <div className="mt-2 flex items-center px-2 py-2 rounded-full border border-gray-100">
+          <img src="https://via.placeholder.com/32" alt="Profile" className="w-6 h-6 rounded-full mr-2" />
+          <span className="text-sm">Andrew Neilson</span>
+        </div>
+      </div>
+    </>
   );
 };
 
