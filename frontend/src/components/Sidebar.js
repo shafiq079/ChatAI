@@ -110,10 +110,7 @@ const Sidebar = ({ setConversationId, onConversationCreated, updateConversationT
 
   // Mobile sidebar overlay
   const MobileSidebar = (
-    <div className={`fixed inset-0 z-50 bg-black bg-opacity-40 flex md:hidden ${mobileOpen ? '' : 'pointer-events-none'}`}
-      style={{ transition: 'background 0.2s' }}
-      onClick={() => setMobileOpen(false)}
-    >
+    <div className={`fixed inset-0 z-50 ${mobileOpen ? 'bg-black bg-opacity-40' : 'pointer-events-none bg-transparent'} flex md:hidden`} style={{ transition: 'background 0.2s' }} onClick={() => setMobileOpen(false)}>
       <aside
         className={`bg-white w-4/5 max-w-xs h-full shadow-lg p-4 flex flex-col transform transition-transform duration-200 ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}`}
         onClick={e => e.stopPropagation()}
