@@ -14,8 +14,8 @@ const UserInput = ({ onSendMessage }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex items-center">
-      <div className="relative flex-1">
+    <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row items-center gap-2 w-full">
+      <div className="relative flex-1 w-full">
         <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
           <GiBrain />
         </span>
@@ -24,12 +24,12 @@ const UserInput = ({ onSendMessage }) => {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="What's in your mind?..."
-          className="w-full pl-10 rounded-full text-sm py-4 border border-gray-300 focus:outline-none"
+          className="w-full pl-10 rounded-full text-sm py-3 sm:py-4 border border-gray-300 focus:outline-none"
         />
       </div>
       <button
         type="submit"
-        className="bg-blue-600 relative text-white p-3 rounded-full shadow-md -ml-12 z-10"
+        className="bg-blue-600 relative text-white p-3 rounded-full shadow-md z-10 mt-2 sm:mt-0"
       >
         <RiSendPlaneLine />
       </button>

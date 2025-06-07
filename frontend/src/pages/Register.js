@@ -47,13 +47,13 @@ const SignUp = () => {
   };
 
   return (
-    <div className="container w-full flex mx-auto border-2 border-gray-200">
+    <div className="flex flex-col lg:flex-row w-full min-h-screen">
       <div
-        className="w-1/2 h-screen relative bg-cover bg-center"
+        className="w-full lg:w-1/2 h-64 lg:h-screen relative bg-cover bg-center"
         style={{ backgroundImage: `url(${bgImg})` }}
       >
         <div className="absolute inset-0 bg-blue-900 bg-opacity-60"></div>
-        <div className="relative z-10 flex flex-col justify-center h-full px-10 text-white">
+        <div className="relative z-10 flex flex-col justify-center h-full px-4 sm:px-10 text-white">
           <h2 className="absolute top-4 left-4 tracking-widest font-bold text-white">
             CHAT A.I +
           </h2>
@@ -67,8 +67,7 @@ const SignUp = () => {
           </div>
         </div>
       </div>
-
-      <div className="w-1/2 flex flex-col bg-white justify-center items-center h-screen">
+      <div className="w-full lg:w-1/2 flex flex-col bg-white justify-center items-center min-h-[60vh] lg:h-screen p-4 sm:p-8">
         <h1 className="text-xl font-bold mb-2">
           {isLogin ? 'Login to Your Account' : 'Sign Up With Free Trial'}
         </h1>

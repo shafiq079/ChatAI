@@ -102,16 +102,16 @@ const ChatBar = ({ conversationId, setConversationId, onConversationCreated, upd
   };
 
   return (
-    <div className="w-4/5 h-screen p-0 flex flex-col bg-gray-100">
+    <div className="flex-1 flex flex-col h-full bg-gray-100">
       <div className="flex w-full flex-1 overflow-y-auto">
-        <div className="flex-1 overflow-y-auto overflow-x-hidden p-8">
+        <div className="flex-1 overflow-y-auto overflow-x-hidden p-2 sm:p-4 md:p-8">
           {messages.map((msg, index) => (
             <div
               key={`${msg.timestamp}-${index}`}
-              className="flex justify-start mb-4 w-3/4 mx-auto"
+              className="flex flex-col sm:flex-row justify-start mb-4 w-full sm:w-3/4 mx-auto"
             >
               {/* Profile picture column */}
-              <div className="w-12 flex-shrink-0">
+              <div className="w-12 flex-shrink-0 mx-auto sm:mx-0">
                 {msg.sender === 'user' && (
                   <img
                     src={userProfilePic}
@@ -158,7 +158,7 @@ const ChatBar = ({ conversationId, setConversationId, onConversationCreated, upd
           ))}
         </div>
       </div>
-      <div className="p-4 w-3/4 mx-auto border-t">
+      <div className="p-2 sm:p-4 w-full sm:w-3/4 mx-auto border-t">
         <UserInput onSendMessage={handleSendMessage} />
       </div>
     </div>

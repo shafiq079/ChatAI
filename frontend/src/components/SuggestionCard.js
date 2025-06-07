@@ -38,7 +38,7 @@ const SuggestionCard = ({ title, description, icon }) => {
   return (
     <div
       onClick={handleClick}
-      className={`border rounded-lg p-4 flex items-start space-x-4 cursor-pointer ${styles.card}`}
+      className={`border rounded-lg p-4 flex flex-col sm:flex-row items-start space-y-2 sm:space-y-0 sm:space-x-4 cursor-pointer ${styles.card}`}
     >
       <div className={`w-10 h-10 rounded-full flex items-center justify-center ${styles.icon}`}>
         <span className="text-xl">{icon}</span>

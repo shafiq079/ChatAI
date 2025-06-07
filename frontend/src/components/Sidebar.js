@@ -96,7 +96,7 @@ const Sidebar = ({ setConversationId, onConversationCreated, updateConversationT
   };
 
   return (
-    <div className="w-1/5 h-screen bg-white shadow-lg p-4 flex flex-col">
+    <div className="hidden md:flex md:w-1/4 lg:w-1/5 h-full bg-white shadow-lg p-4 flex-col">
       <div className="mb-4">
         <h1 className="text-xl font-bold mb-4">CHAT A.I.+</h1>
         <div className="flex justify-between items-center gap-2">

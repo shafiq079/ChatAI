@@ -38,20 +38,22 @@ const Chat = () => {
   }, []);
 
   return (
-    <div className="flex h-screen">
+    <div className="flex flex-col md:flex-row h-screen w-full">
       <Sidebar
         setConversationId={setConversationId}
         onConversationCreated={handleConversationCreated}
         updateConversationTitle={handleUpdateTitle}
         refreshKey={refreshKey}
       />
-      <ChatBar
-        conversationId={conversationId}
-        setConversationId={setConversationId}
-        onConversationCreated={handleConversationCreated}
-        updateConversationTitle={updateTitleFn}
-        initialMessage={initialMessage}
-      />
+      <div className="flex-1 flex flex-col">
+        <ChatBar
+          conversationId={conversationId}
+          setConversationId={setConversationId}
+          onConversationCreated={handleConversationCreated}
+          updateConversationTitle={updateTitleFn}
+          initialMessage={initialMessage}
+        />
+      </div>
     </div>
   );
 };
