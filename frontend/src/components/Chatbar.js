@@ -108,57 +108,49 @@ const ChatBar = ({ conversationId, setConversationId, onConversationCreated, upd
           {messages.map((msg, index) => (
             <div
               key={`${msg.timestamp}-${index}`}
-              className="flex flex-col sm:flex-row justify-start mb-4 w-full sm:w-3/4 mx-auto"
+              className="flex items-start mb-4 w-full sm:w-3/4 mx-auto px-2 sm:px-0"
             >
-              {/* Profile picture column */}
-              <div className="w-12 flex-shrink-0 mx-auto sm:mx-0">
-                {msg.sender === 'user' && (
-                  <img
-                    src={userProfilePic}
-                    alt="User Profile"
-                    className="w-8 h-8 rounded-full mt-2"
-                  />
-                )}
-              </div>
-              {/* Text column */}
-              <div className="flex-1">
-                {msg.sender === 'user' ? (
-                  <div className="pt-3 text-sm">
-                    {msg.text}
+              {/* Profile picture and text in a row for user */}
+              {msg.sender === 'user' ? (
+                <>
+                  <div className="w-8 h-8 flex-shrink-0 mr-2">
+                    <img
+                      src={userProfilePic}
+                      alt="User Profile"
+                      className="w-8 h-8 rounded-full mt-0"
+                    />
                   </div>
-                ) : (
-                  <>
-                    <div className="text-sm px-2 font-semibold">
-                      Chat A.I.
+                  <div className="flex-1 flex items-center">
+                    <div className="pt-0 text-sm bg-white rounded-xl px-3 py-2 shadow-sm">
+                      {msg.text}
                     </div>
-                    <div className="p-2 text-sm ">
-                      <ReactMarkdown
-                        components={{
-                          h1: ({ node, ...props }) => <h1 className="text-lg font-bold mt-2 mb-1" {...props} />,
-                          h2: ({ node, ...props }) => <h2 className="text-md font-semibold mt-2 mb-1" {...props} />,
-                          h3: ({ node, ...props }) => <h3 className="text-sm font-semibold mt-2 mb-1" {...props} />,
-                          ul: ({ node, ...props }) => <ul className="list-disc pl-4 mt-1 mb-1" {...props} />,
-                          li: ({ node, ...props }) => <li className="text-sm pb-4" {...props} />,
-                          p: ({ node, ...props }) => <p className="text-sm mt-1 mb-1" {...props} />,
-                          strong: ({ node, ...props }) => <strong className="font-bold" {...props} />,
-                        }}
-                      >
-                        {msg.text}
-                      </ReactMarkdown>
-                    </div>
-                  </>
-                )}
-                <div
-                  className={`${msg.sender !== 'user' ? 'w-full h-[0.5px] bg-gray-400' : ''
-                    }`}
-                />
-              </div>
-
+                  </div>
+                </>
+              ) : (
+                <div className="flex-1">
+                  <div className="text-sm px-2 font-semibold">Chat A.I.</div>
+                  <div className="p-2 text-sm ">
+                    <ReactMarkdown
+                      components={{
+                        h1: ({ node, ...props }) => <h1 className="text-lg font-bold mt-2 mb-1" {...props} />,
+                        h2: ({ node, ...props }) => <h2 className="text-md font-semibold mt-2 mb-1" {...props} />,
+                        h3: ({ node, ...props }) => <h3 className="text-sm font-semibold mt-2 mb-1" {...props} />,
+                        ul: ({ node, ...props }) => <ul className="list-disc pl-4 mt-1 mb-1" {...props} />,
+                        li: ({ node, ...props }) => <li className="text-sm pb-4" {...props} />,
+                        p: ({ node, ...props }) => <p className="text-sm mt-1 mb-1" {...props} />,
+                        strong: ({ node, ...props }) => <strong className="font-bold" {...props} />,
+                      }}
+                    >
+                      {msg.text}
+                    </ReactMarkdown>
+                  </div>
+                </div>
+              )}
             </div>
           ))}
         </div>
       </div>
-      <div className="p-2 sm:p-4 w-full sm:w-3/4 mx-auto border-t">
+      <div className="w-full sm:w-3/4 mx-auto px-2 sm:px-0 border-t bg-gray-100 sticky bottom-0 z-20">
         <UserInput onSendMessage={handleSendMessage} />
       </div>
     </div>
